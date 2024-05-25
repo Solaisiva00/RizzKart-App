@@ -14,7 +14,7 @@ export default function AddCart({ productId, addItem }: addprop) {
   return (
     <div className="flex items-center gap-2">
       <button
-        className="btn btn-primary btn-block mt-5"
+        className="btn bg-black text-white font-bold btn-block mt-5"
         onClick={() => {
           setSuccess(false);
           startTransition(async () => {

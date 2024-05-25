@@ -1,8 +1,10 @@
-import { title } from "process";
+
 import image from "../../public/image1.jpg";
 import { prisma } from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
 import Button from "@/components/button";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 export const metadata = {
   title: "rizzKart - Add product",
@@ -21,7 +23,11 @@ async function addProduct(formData: FormData) {
   });
   redirect("/");
 }
-const Add = () => {
+const Add = async() => {
+  const session= await getServerSession(authOptions)
+  if(!session){
+    redirect("/api/auth/signin?callbackUrl=/add")
+  }
   return (
     <div
       className="mx-auto max-w-2xl h-screen  shadow-2xl relative "
@@ -32,7 +38,7 @@ const Add = () => {
       }}
     >
       <section className="absolute inset-0 bg-gradient-to-b from-transparent to-black ">
-        <h1 className="bg-blue-900 text-lg font-bold px-10 py-5 text-[26px]   text-white">
+        <h1 className="bg-black text-lg font-bold px-10 py-5 text-[26px]   text-white">
           Add product
         </h1>
         <img
@@ -41,7 +47,7 @@ const Add = () => {
           src="https://img.icons8.com/3d-fluency/94/shopping-cart.png"
           alt="shopping-cart"
           className="mx-auto mt-10 drop-shadow-xl fill-current"
-          style={{ filter: "drop-shadow(0 0 .3rem #fff" }}
+          style={{ filter: "drop-shadow(0 0 .3rem #000" }}
         />
         <form
           action={addProduct}
@@ -74,7 +80,7 @@ const Add = () => {
             name="price"
             required
           />
-          <Button className="btn btn-block disabled:text-white bg-blue-900 border-none  text-white mt-5">
+          <Button className="btn btn-block  disabled:text-white disabled:bg-slate-500 bg-black border-none  text-white mt-5">
             Add item
           </Button>
         </form>

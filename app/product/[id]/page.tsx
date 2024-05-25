@@ -47,7 +47,7 @@ export default async function productpage({ params: { id } }: pageprop) {
           <h1 className="text-3xl md:text-[3rem] md:mb-5  md:drop-shadow-[0_0_.5rem_#ffffff] font-bold">
             {productu.name}
           </h1>
-          <Pricetag price={productu.price} className="mt-4 bg-green-400 font-semibold" />
+          <Pricetag price={productu.price} className="mt-4 bg-slate-200 font-semibold drop-shadow-[0_0_.1rem_#000]" />
           <p className="py-6 ">{productu.description}</p>
             <AddCart productId={productu.id} addItem={addItem}/>
         </div>

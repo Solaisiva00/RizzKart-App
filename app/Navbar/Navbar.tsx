@@ -3,6 +3,9 @@ import Link from "next/link";
 import CartButton from "./cartButton";
 import { prisma } from "@/lib/db/prisma";
 import { getCart } from "@/lib/db/cart";
+import UserProfile from "./Profile"
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]/route";
 
 async function searchProduct(formData: FormData) {
   "use server";
@@ -13,6 +16,7 @@ async function searchProduct(formData: FormData) {
   }
 }
 const Navbar = async () => {
+  const session =await getServerSession(authOptions)
   const cart = await getCart();
   return (
     <div className="navbar shadow-xl scr sticky top-0 z-30 md:px-10 px-5 py-3">
@@ -49,37 +53,7 @@ const Navbar = async () => {
 
       <div className="flex-none">
         <CartButton cart={cart} />
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
-            </div>
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        </div>
+        <UserProfile session={session}/>
       </div>
     </div>
   );
