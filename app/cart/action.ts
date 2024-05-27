@@ -39,9 +39,17 @@ export async function remove(productId: string) {
 
   const myCart = cart.item.find((item) => item.productId === productId);
   if (myCart) {
-    await prisma.cartItem.delete({
-      where: { id: myCart.id },
-    });
+    // await prisma.cartItem.delete({
+    //   where: { id: myCart.id },
+    // });
+    await prisma.cart.update({
+      where:{id:cart.id},
+      data:{
+        item:{
+          delete:{id:myCart.id}
+        }
+      }
+    })
   }
   revalidatePath("/cart");
 }
