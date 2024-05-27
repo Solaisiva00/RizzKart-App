@@ -11,8 +11,8 @@ export default async function CartPage() {
   const Cart = await getCart();
 
   return (
-    <div className="md:p-10">
-      <h1 className="mb-6 text-3xl font-bold px-5">Shopping Cart 🛒</h1>
+    <div className="md:p-10 ">
+      <h1 className="m-6 text-3xl font-bold ">Shopping Cart 🛒</h1>
       {Cart?.subtotal != 0 ? (
         <section>
           {Cart?.item.map((c) => (
@@ -26,9 +26,9 @@ export default async function CartPage() {
                 Total :{" "}
                 <span className=" p-5 font-medium">
                   {formatprice(Cart?.subtotal) || 0}
-                </span>{" "}
+                </span>
               </div>
-              <button className="btn  bg-green-500 btn-sm md:btn-lg md:px-10 text-white">
+              <button className="btn  bg-black px-4 btn-sm md:btn-lg md:px-10 text-white">
                 {" "}
                 buy Now
               </button>

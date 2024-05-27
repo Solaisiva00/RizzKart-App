@@ -1,5 +1,6 @@
 import zod, { string } from "zod";
 
+//validate .env keys presence
 const envSchema = zod.object({
   DATABASE_URL: zod.string().nonempty(),
   GOOGLE_CLIENT_ID: zod.string().nonempty(),

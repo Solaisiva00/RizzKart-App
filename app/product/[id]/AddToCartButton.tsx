@@ -1,8 +1,8 @@
 "use client";
 
-import { product } from "@prisma/client";
-import { Span } from "next/dist/trace";
-import { useTransition, useState } from "react";
+import Link from "next/link";
+import { useTransition, useState,useEffect } from "react";
+import { inCart } from "./action";
 
 interface addprop {
   productId: string;
@@ -11,38 +11,44 @@ interface addprop {
 export default function AddCart({ productId, addItem }: addprop) {
   const [isPending, startTransition] = useTransition();
   const [success, setSuccess] = useState(false);
+  const [isItem, setIsItem] = useState(false);
+
   return (
     <div className="flex items-center gap-2">
-      <button
-        className="btn bg-black text-white font-bold btn-block mt-5"
-        onClick={() => {
-          setSuccess(false);
-          startTransition(async () => {
-            await addItem(productId);
-            setSuccess(true);
-          });
-        }}
-      >
-        {!success && !isPending && (
-          <div className="flex gap-3 items-center">
-            <span>Add to Cart</span>
-            <img
-              width="20"
-              height="20"
-              src="https://img.icons8.com/ios-glyphs/30/FFFFFF/fast-cart.png"
-              className="ml-2"
-              alt="fast-cart"
-            />
-          </div>
-        )}
-        {isPending && !success && (
-          <div className="flex items-center gap-3">
-            <span className="loading loading-spinner" />
-            <span>Adding to Cart ...</span>
-          </div>
-        )}
-        {success && <span className="text-white font-bold"> Added to Cart ✅</span>}
-      </button>
+      {isItem ? (
+        <Link href={"/cart"}  className="btn bg-black  text-white btn-block mt-5">In cart</Link>
+      ) : (
+        <button
+          className="btn bg-black  text-white btn-block mt-5"
+          onClick={() => {
+            setSuccess(false);
+            startTransition(async () => {
+              await addItem(productId);
+              setSuccess(true);
+              setIsItem(true);
+            });
+          }}
+        >
+          {!success && !isPending && (
+            <div className="flex gap-3 items-center">
+              <span>Add to Cart</span>
+              <img
+                width="20"
+                height="20"
+                src="https://img.icons8.com/ios-glyphs/30/FFFFFF/fast-cart.png"
+                className="ml-2"
+                alt="fast-cart"
+              />
+            </div>
+          )}
+          {isPending && !success && (
+            <div className="flex items-center gap-3">
+              <span className="loading loading-spinner" />
+              <span>Adding to Cart ...</span>
+            </div>
+          )}
+        </button>
+      )}
     </div>
   );
 }

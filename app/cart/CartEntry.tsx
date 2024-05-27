@@ -28,7 +28,7 @@ export default function ({
     <div className="md:p-8 p-3">
       <div className="flex flex-wrap items-center gap-10 relative">
         <button
-          className="absolute top-0 right-0 text-[#4d4d4d] underline"
+          className="absolute top-[-30px] right-5 text-[#4d4d4d] underline"
           onClick={() => {
             startTransition(async()=>{
               await remove(productId)
@@ -42,7 +42,7 @@ export default function ({
           width={200}
           height={200}
           alt={Product.name}
-          className="w-40"
+          className="w-40 h-44 object-cover"
           priority
         />
         <div className="">
@@ -55,7 +55,7 @@ export default function ({
           <div className="md:flex md:items-center md:justify-center md:gap-10 md:text-[20px] md:mt-0 ">
             <div className="mt-5  my-2">
               Price :{" "}
-              <span className="badge  bg-green-300">
+              <span className="badge p-2 ml-5  bg-slate-200 drop-shadow-[0_0_.1rem_#000]">
                 {formatprice(Product.price)}
               </span>
             </div>
@@ -81,7 +81,7 @@ export default function ({
             Total Price:{" "}
             <span className="font-light">
               {formatprice(Product.price * quantity)}
-            </span>{" "}
+            </span>
           </div>
         </div>
       </div>
