@@ -3,7 +3,7 @@ import { prisma } from "./prisma";
 import { Cart, CartItem, Prisma, product } from "@prisma/client";
 import { promises } from "dns";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { config } from "@/app/api/auth/[...nextauth]/route";
 import { Session } from "inspector";
 
 //type deceluration
@@ -26,7 +26,7 @@ export type Product = product;
 
 //get cart from server
 export async function getCart(): Promise<shoppingcart | null> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(config);
   let cart: cartWithProduct | null = null;
   if (session) {
     cart = await prisma.cart.findFirst({
@@ -59,7 +59,7 @@ export async function getCart(): Promise<shoppingcart | null> {
 
 //for create new cart in DB
 export async function createCart(): Promise<shoppingcart> {
-  const session = await getServerSession(authOptions);
+  const session = await getServerSession(config);
   let newCart: Cart;
   if (session) {
     newCart = await prisma.cart.create({

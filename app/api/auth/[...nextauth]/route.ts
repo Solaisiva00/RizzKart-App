@@ -7,7 +7,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { env } from "@/lib/db/env";
 import { merge } from "@/lib/db/cart";
 
-export const authOptions: NextAuthOptions = {
+export const config: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     GoogleProvider({
@@ -28,6 +28,6 @@ export const authOptions: NextAuthOptions = {
  }
 };
 
-const handler = NextAuth(authOptions);
+const handler = NextAuth(config);
 
 export { handler as GET, handler as POST };

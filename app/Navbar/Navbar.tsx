@@ -5,7 +5,7 @@ import { prisma } from "@/lib/db/prisma";
 import { getCart } from "@/lib/db/cart";
 import UserProfile from "./Profile"
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { config } from "../api/auth/[...nextauth]/route";
 
 async function searchProduct(formData: FormData) {
   "use server";
@@ -16,7 +16,7 @@ async function searchProduct(formData: FormData) {
   }
 }
 const Navbar = async () => {
-  const session =await getServerSession(authOptions)
+  const session =await getServerSession(config)
   const cart = await getCart();
   return (
     <div className="navbar shadow-xl scr sticky top-0 z-30 md:px-10 px-5 py-3">

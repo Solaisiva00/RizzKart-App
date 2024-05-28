@@ -1,6 +1,6 @@
 "use server";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { config } from "@/app/api/auth/[...nextauth]/route";
 import { createCart, getCart } from "@/lib/db/cart";
 import { prisma } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
@@ -25,13 +25,10 @@ export async function addItem(productId: string) {
     });
   }
   revalidatePath("/product/[id]");
-  return isIteam ? true : false;
 }
 
 export async function inCart(productId: string) {
   const cart = (await getCart()) ?? (await createCart());
 
-  const isIteam = cart.item.find((i) => i.productId === productId);
-
-  return isIteam ? true : false
+  const isIteam = cart.item.find((i) => i.productId === productId)
 }
