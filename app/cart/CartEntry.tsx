@@ -11,7 +11,7 @@ interface CartEntryprop {
   setQuantity: (productId: string, quantity: number) => Promise<void>;
 }
 
-export default function ({
+export default function CartEntry ({
   cartItem: { Product, productId, quantity },
 }: CartEntryprop) {
   const [isPending, startTransition] = useTransition();

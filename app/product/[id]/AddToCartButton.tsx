@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useTransition, useState, useEffect } from "react";
 import { inCart } from "./action";
-
+import Image from "next/image";
 interface addprop {
   productId: string;
   addItem: (productId: string) => Promise<void>;
@@ -27,9 +27,9 @@ export default function AddCart({ productId, addItem }: addprop) {
         {!success && !isPending && (
           <div className="flex gap-3 items-center">
             <span>Add to Cart</span>
-            <img
-              width="20"
-              height="20"
+            <Image
+              width={20}
+              height={20}
               src="https://img.icons8.com/ios-glyphs/30/FFFFFF/fast-cart.png"
               className="ml-2"
               alt="fast-cart"

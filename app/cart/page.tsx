@@ -16,7 +16,7 @@ export default async function CartPage() {
       {Cart?.subtotal != 0 ? (
         <section>
           {Cart?.item.map((c) => (
-            <div>
+            <div key={c.id}>
               <CartEntry cartItem={c} key={c.id} setQuantity={setQuantity} />
             </div>
           ))}

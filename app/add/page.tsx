@@ -3,8 +3,8 @@ import { prisma } from "@/lib/db/prisma";
 import { redirect } from "next/navigation";
 import Button from "@/components/button";
 import { getServerSession } from "next-auth";
-import { config } from "../api/auth/[...nextauth]/route";
-
+import { authOptions } from "../utils/authOptions";
+import Image from "next/image";
 export const metadata = {
   title: "rizzKart - Add product",
 };
@@ -23,7 +23,7 @@ async function addProduct(formData: FormData) {
   redirect("/");
 }
 const Add = async () => {
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   if (!session) {
     redirect("/api/auth/signin?callbackUrl=/add");
   }
@@ -40,9 +40,9 @@ const Add = async () => {
         <h1 className="bg-black text-lg font-bold px-10 py-5 text-[26px]   text-white">
           Add product
         </h1>
-        <img
-          width="104"
-          height="104"
+        <Image
+          width={104}
+          height={104}
           src="https://img.icons8.com/3d-fluency/94/shopping-cart.png"
           alt="shopping-cart"
           className="mx-auto mt-10 drop-shadow-xl fill-current md:hidden"

@@ -1,9 +1,8 @@
 import { cookies } from "next/headers";
 import { prisma } from "./prisma";
 import { Cart, CartItem, Prisma, product } from "@prisma/client";
-import { promises } from "dns";
 import { getServerSession } from "next-auth";
-import { config } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/app/utils/authOptions";
 import { Session } from "inspector";
 
 //type deceluration
@@ -26,7 +25,7 @@ export type Product = product;
 
 //get cart from server
 export async function getCart(): Promise<shoppingcart | null> {
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   let cart: cartWithProduct | null = null;
   if (session) {
     cart = await prisma.cart.findFirst({
@@ -35,7 +34,7 @@ export async function getCart(): Promise<shoppingcart | null> {
     });
   } else {
     const localCartId = cookies().get("localCartId")?.value;
-   cart = localCartId
+    cart = localCartId
       ? await prisma.cart.findUnique({
           where: { id: localCartId },
           include: { item: { include: { Product: true } } },
@@ -59,7 +58,7 @@ export async function getCart(): Promise<shoppingcart | null> {
 
 //for create new cart in DB
 export async function createCart(): Promise<shoppingcart> {
-  const session = await getServerSession(config);
+  const session = await getServerSession(authOptions);
   let newCart: Cart;
   if (session) {
     newCart = await prisma.cart.create({
@@ -112,19 +111,19 @@ export async function merge(userId: string) {
           userId,
           item: {
             createMany: {
-              data: localcart.item.map(item=>({
-                productId:item.productId,
-                quantity:item.quantity
-              }))
+              data: localcart.item.map((item) => ({
+                productId: item.productId,
+                quantity: item.quantity,
+              })),
             },
           },
         },
       });
     }
     await tx.cart.delete({
-      where:{id:localcart.id}
-    })
-    cookies().set("localCartId","")
+      where: { id: localcart.id },
+    });
+    cookies().set("localCartId", "");
   });
 }
 

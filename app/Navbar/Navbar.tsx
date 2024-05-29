@@ -3,9 +3,9 @@ import Link from "next/link";
 import CartButton from "./cartButton";
 import { prisma } from "@/lib/db/prisma";
 import { getCart } from "@/lib/db/cart";
-import UserProfile from "./Profile"
+import UserProfile from "./Profile";
 import { getServerSession } from "next-auth";
-import { config } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "../utils/authOptions";
 
 async function searchProduct(formData: FormData) {
   "use server";
@@ -16,7 +16,7 @@ async function searchProduct(formData: FormData) {
   }
 }
 const Navbar = async () => {
-  const session =await getServerSession(config)
+  const session = await getServerSession(authOptions);
   const cart = await getCart();
   return (
     <div className="navbar shadow-xl scr sticky top-0 z-30 md:px-10 px-5 py-3">
@@ -53,7 +53,7 @@ const Navbar = async () => {
 
       <div className="flex-none">
         <CartButton cart={cart} />
-        <UserProfile session={session}/>
+        <UserProfile session={session} />
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 "use server";
 
-import { config } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "../../utils/authOptions";
 import { createCart, getCart } from "@/lib/db/cart";
 import { prisma } from "@/lib/db/prisma";
 import { getServerSession } from "next-auth";
@@ -30,5 +30,5 @@ export async function addItem(productId: string) {
 export async function inCart(productId: string) {
   const cart = (await getCart()) ?? (await createCart());
 
-  const isIteam = cart.item.find((i) => i.productId === productId)
+  const isIteam = cart.item.find((i) => i.productId === productId);
 }
